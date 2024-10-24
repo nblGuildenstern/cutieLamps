@@ -10,8 +10,11 @@ export default function handler(req, res) {
     } else if (ledState === "OFF") {
       // Code to turn off the LED
       console.log("LED is OFF");
+    } else {
+      console.log("Invalid state");
     }
     
+    // Respond with the LED state
     res.status(200).json({ message: `LED turned ${ledState}` });
   } else {
     res.setHeader('Allow', ['GET']);
