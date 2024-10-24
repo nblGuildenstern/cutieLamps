@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     const { query } = req;
     const ledState = query.state; // "ON", "OFF", "red", "blue", etc.
     
-    const esp8266IP = 'http://192.168.4.48';  // Replace with your ESP8266 IP
+    const esp8266IP = 'http://192.168.84.121';  // Replace with your ESP8266 IP
     try {
       const response = await axios.get(`${esp8266IP}/RGB?color=${ledState}`);
       res.status(200).json({ message: response.data });
