@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lamp Controls</title>
+</head>
+<body>
+    <button onclick="changeColor('red')">Red</button>
+    <button onclick="changeColor('green')">Green</button>
+    <button onclick="changeColor('blue')">Blue</button>
+
+    <script>
+    function changeColor(color) {
+        fetch('https://cutie-lamps.vercel.app', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            color: color,
+            ip: 'ESP8266-IP-HERE'
+        }),
+        })
+        .then(response => response.text())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+</body>
+</html>
