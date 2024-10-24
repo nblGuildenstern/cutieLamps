@@ -1,21 +1,17 @@
-export default function handler(req, res) {
+import axios from 'axios';
+
+export default async function handler(req, res) {
   if (req.method === 'GET') {
     const { query } = req;
-    const ledState = query.state; // "ON" or "OFF"
+    const ledState = query.state; // "ON", "OFF", "red", "blue", etc.
     
-    // Here, add the logic to handle the LED state
-    if (ledState === "ON") {
-      // Code to turn on the LED
-      console.log("LED is ON");
-    } else if (ledState === "OFF") {
-      // Code to turn off the LED
-      console.log("LED is OFF");
-    } else {
-      console.log("Invalid state");
+    const esp8266IP = 'http://192.168.4.48';  // Replace with your ESP8266 IP
+    try {
+      const response = await axios.get(`${esp8266IP}/RGB?color=${ledState}`);
+      res.status(200).json({ message: response.data });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to control LED', error: error.message });
     }
-    
-    // Respond with the LED state
-    res.status(200).json({ message: `LED turned ${ledState}` });
   } else {
     res.setHeader('Allow', ['GET']);
     res.status(405).end(`Method ${req.method} Not Allowed`);
